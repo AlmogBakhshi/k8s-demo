@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: quakewatch-cronjob-clean-logs
+spec:
+  # This cron job runs every 30 days to clean the logs volume
+  schedule: "* * */30 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: quakewatch-container
+            image: almogbakhshi/final-project:latest
+            args:
+            - /bin/sh
+            - -c
+            - |
+              echo "Clean logs volume"
+              rm -rf /app/logs/*
+              echo "Done cleaning logs"
+            volumeMounts:
+            - name: flask-logs
+              mountPath: /app/logs
+          restartPolicy: OnFailure
+          volumes:
+          - name: flask-logs
+            emptyDir: {}
