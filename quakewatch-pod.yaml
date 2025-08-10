@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quakewatch-pod
+spec:
+  containers:
+  - image: almogbakhshi/final-project:latest
+    name: quakewatch-container
+    ports:
+    - containerPort: 5000
+    volumeMounts:
+    - mountPath: /app/data
+      name: app-data
+    - mountPath: /app/logs
+      name: flask-logs
+  volumes:
+  - name: app-data
+    emptyDir: {}
+  - name: flask-logs
+    emptyDir: {}
