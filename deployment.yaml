@@ -22,6 +22,11 @@ spec:
           name: app-data
         - mountPath: /app/logs
           name: flask-logs
+        envFrom:
+        - secretRef:
+            name: quakewatch-secret
+        - configMapRef:
+            name: quakewatch-config
       volumes:
       - name: app-data
         emptyDir: {}
